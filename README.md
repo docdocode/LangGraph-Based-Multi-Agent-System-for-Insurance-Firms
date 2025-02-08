@@ -33,12 +33,13 @@ LangGraph-Based-Multi-Agent-System-for-Insurance-Firms/
 
 ```
 ---
+## Architecture
 
 ![Architecture](images/architecture-flow.png)
 
 ---
 
-## Tools, Libraries, and Frameworks Used
+## Tools, Libraries, andgit status Frameworks Used
 
 ### Core Frameworks
 - **LangGraph**: Manages the graph-based workflow and state transitions.
