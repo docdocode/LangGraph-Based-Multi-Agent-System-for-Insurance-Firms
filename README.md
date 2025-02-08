@@ -186,3 +186,12 @@ Based on the classification, the query is routed to the appropriate agent:
 5. Run index_knowledge_base.py for once to instantiate the knowledge base
     ```bash
     python index_knowledge_base.py
+
+6. Run the main.py file from terminal
+    ```bash
+    python main.py
+
+7. Run the app.py file for a streamlit app UI
+    ```bash
+    streamlit run app.py
+    
