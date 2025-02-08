@@ -3,6 +3,35 @@
 This application is a **multi-agent system** designed to handle various types of insurance-related queries using **LangGraph**, an extension of **LangChain**. The system dynamically routes user queries to appropriate agents based on their context, ensuring accurate and relevant responses. It leverages **Retrieval-Augmented Generation (RAG)** for customer support and **DuckDuckGo** for external information retrieval.
 
 ---
+
+## Repository Structure
+
+```plaintext
+LangGraph-Based-Multi-Agent-System-for-Insurance-Firms/
+├── agents/
+│   ├── claim_processor.py
+│   ├── customer_support.py
+│   ├── policy_advisor.py
+│   └── tool_agent.py
+├── workflows/
+│   ├── insurance_workflow.py
+│   └── utils.py
+├── data/
+│   ├── faqs.txt
+│   ├── policies.csv
+│   └── index_knowledge_base.py
+├── images/
+│   └── workflow_diagram.png
+├── .env
+├── .gitignore
+├── README.md
+├── app.py
+├── main.py
+├── requirements.txt
+└── index_knowledge_base.py
+```
+---
+
 ## Tools, Libraries, and Frameworks Used
 
 ### Core Frameworks
@@ -185,10 +214,6 @@ Based on the classification, the query is routed to the appropriate agent:
       ]
   }
   ```
-
----
-
-
 
 ---
 
