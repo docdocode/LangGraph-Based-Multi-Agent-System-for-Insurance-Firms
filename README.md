@@ -13,16 +13,15 @@ LangGraph-Based-Multi-Agent-System-for-Insurance-Firms/
 │   ├── customer_support.py
 │   ├── policy_advisor.py
 │   └── tool_agent.py
+├── chroma_db/
 ├── workflows/
 │   ├── insurance_workflow.py
-│   └── utils.py
+├── utils/
+│   ├── config.py
+│   ├── prompts.py
+│   ├── tools.py
 ├── data/
 │   ├── faqs.txt
-│   ├── policies.csv
-│   └── index_knowledge_base.py
-├── images/
-│   └── workflow_diagram.png
-├── .env
 ├── .gitignore
 ├── README.md
 ├── app.py
