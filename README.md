@@ -22,13 +22,20 @@ LangGraph-Based-Multi-Agent-System-for-Insurance-Firms/
 │   ├── tools.py
 ├── data/
 │   ├── faqs.txt
+├── images/
+│   ├── architecture-flow.png
 ├── .gitignore
 ├── README.md
 ├── app.py
 ├── main.py
 ├── requirements.txt
 └── index_knowledge_base.py
+
 ```
+---
+
+![Architecture](images/architecture-flow.png)
+
 ---
 
 ## Tools, Libraries, and Frameworks Used
