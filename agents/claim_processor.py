@@ -3,9 +3,13 @@ from utils.prompts import CLAIM_PROCESSING_PROMPT
 
 class ClaimProcessorAgent:
     def __init__(self):
-        self.llm = get_llm()  # Use the centralized model
+        self.llm = get_llm()  # Fetch the ChatOpenAI instance
     
     def process_claim(self, policy_id, incident_details):
         prompt = CLAIM_PROCESSING_PROMPT.format(policy_id=policy_id, incident_details=incident_details)
-        response = self.llm.invoke(prompt)
-        return response
+        print("\033[1m\033[93mCalling Agent: ClaimProcessorAgent\033[0m")
+        response = self.llm.invoke(prompt)  # Pass the prompt to the LLM
+        
+        # Extract only the content from the response
+        llm_response_content = response.content if hasattr(response, "content") else str(response)
+        return llm_response_content

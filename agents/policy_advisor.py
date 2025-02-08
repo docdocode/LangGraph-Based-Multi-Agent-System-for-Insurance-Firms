@@ -7,5 +7,7 @@ class PolicyAdvisorAgent:
     
     def recommend_policy(self, customer_profile):
         prompt = POLICY_ADVISOR_PROMPT.format(customer_profile=customer_profile)
+        print("\033[1m\033[93mCalling Agent: PolicyAdvisorAgent\033[0m")
         response = self.llm.invoke(prompt)
-        return response
+        llm_response_content = response.content if hasattr(response, "content") else str(response)
+        return llm_response_content

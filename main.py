@@ -1,36 +1,34 @@
-from workflows.insurance_workflow import InsuranceWorkflow
+from workflows.insurance_workflow import execute_workflow
 from dotenv import load_dotenv
 import os
 
-# Explicitly specify the path to the .env file
-dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
-print(f"Loading .env file from: {dotenv_path}")
-load_dotenv(dotenv_path)
-
-# Debug: Print the API key to verify it's loaded
-# print("OPENAI_API_KEY:", os.getenv("OPENAI_API_KEY"))
+# Load environment variables
+load_dotenv()
 
 def main():
+    # Print the model being used
     model_name = os.getenv("OPENAI_MODEL_NAME", "gpt-3.5-turbo")  # Default to gpt-3.5-turbo
     print(f"\033[1m\033[94mUsing OpenAI Model: {model_name}\033[0m")  # Bold and blue text
     
     print("Starting Insurance Multi-Agent System...")
+    print("\033[1m\033[93mType 'quit' or 'exit' to end the conversation.\033[0m")  # Instructions for quitting
     
-    # Initialize the workflow
-    workflow = InsuranceWorkflow()
-    
-    # Example task: Process a claim
-    task = {
-        "type": "claim_processing",
-        "data": {
-            "policy_id": "POL12345",
-            "incident_details": "Car accident on highway"
-        }
-    }
-    
-    # Execute the workflow
-    result = workflow.execute(task)
-    print("\033[1m\033[92mWorkflow Completed. Result:\033[0m", result)  # Bold and green text
+    while True:
+        # Take input from the user
+        print("\nPlease describe your query or issue:")
+        user_input = input("> ").strip()
+        
+        # Check if the user wants to quit
+        if user_input.lower() in ["quit", "exit", "clear", "done", "bye"]:
+            print("\033[1m\033[91mExiting the chat. Goodbye!\033[0m")
+            break
+        
+        # Execute the workflow
+        result, logs = execute_workflow(user_input)
+        
+        # Print the response, calling agent, and category separately
+        print("\033[1m\033[92mWorkflow Completed. Response:\033[0m", result)  # Bold and green text
+        # print("\033[1m\033[94mWorkflow Logs:\033[0m", logs)  # Bold and blue text
 
 if __name__ == "__main__":
     main()
