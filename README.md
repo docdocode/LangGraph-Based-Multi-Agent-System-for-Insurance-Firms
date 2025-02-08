@@ -62,6 +62,8 @@ LangGraph-Based-Multi-Agent-System-for-Insurance-Firms/
 - **requests**: Makes HTTP requests for web searches.
 - **tiktoken**: Tokenizer for OpenAI models.
 
+---
+
 ## Workflow Overview
 
 The workflow consists of the following steps:
@@ -85,8 +87,6 @@ The workflow consists of the following steps:
 - **Example Queries**:
   - "My car was damaged in an accident."
   - "I need a policy recommendation for a young driver."
-  - "How do I cancel my policy?"
-  - "What are the minimum car insurance requirements in Texas?"
 
 ### Step 2: Query Classification
 - **Node**: `classify_query`
@@ -100,16 +100,6 @@ The workflow consists of the following steps:
   - `policy_recommendation`: For policy advice.
   - `customer_support`: For FAQs and general support.
   - `tool_task`: For queries requiring external information.
-- **Example Prompt**:
-  ```plaintext
-  Classify the following query into one of these categories:
-  claim_processing: Queries related to processing insurance claims (e.g., accidents, incidents).
-  policy_recommendation: Queries asking for advice or recommendations on insurance policies.
-  customer_support: Queries seeking help or clarification about policies or services.
-  tool_task: Queries involving searching for external information or performing a web search (e.g., "find", "search", "latest regulations").
-  Query: {query}
-  ```
-- **Output**: A category label (`claim_processing`, `policy_recommendation`, etc.) that determines the next node.
 
 ### Step 3: Agent Routing
 - **Graph Structure**: The system uses **LangGraph** to define a directed graph where nodes represent tasks or agents, and edges represent transitions between them.
@@ -145,14 +135,6 @@ Based on the classification, the query is routed to the appropriate agent:
   - **ChatOpenAI**: Invokes the OpenAI model to generate a response.
 - **Logic**:
   Processes claims based on incident details.
-- **Example Query**: "My car was damaged in an accident."
-- **Example Prompt**:
-  ```plaintext
-  You are an insurance claim processor. Given the policy ID and incident details, determine the validity of the claim and suggest next steps.
-  Policy ID: POL12345
-  Incident Details: Car accident on highway
-  ```
-- **Output**: A response about claim validity or next steps.
 
 #### Agent 2: PolicyAdvisorAgent
 - **Triggered By**: Queries classified as `policy_recommendation`.
@@ -162,13 +144,6 @@ Based on the classification, the query is routed to the appropriate agent:
   - **ChatOpenAI**: Invokes the OpenAI model to generate a response.
 - **Logic**:
   Recommends policies based on customer profiles.
-- **Example Query**: "I need a policy recommendation for a young driver."
-- **Example Prompt**:
-  ```plaintext
-  You are a policy advisor. Based on the customer profile, recommend the best insurance policy.
-  Customer Profile: Young driver with a clean record
-  ```
-- **Output**: A recommended policy.
 
 #### Agent 3: CustomerSupportAgent
 - **Triggered By**: Queries classified as `customer_support`.
@@ -181,13 +156,6 @@ Based on the classification, the query is routed to the appropriate agent:
   - **ChatOpenAI**: Invokes the OpenAI model to generate a response.
 - **Logic**:
   Uses RAG to retrieve relevant information from the knowledge base (`faqs.txt`) and generates a response. If no relevant information is found, it suggests contacting customer support.
-- **Example Query**: "How do I cancel my policy?"
-- **Example Knowledge Base Entry**:
-  ```plaintext
-  Q: How do I cancel my policy?
-  A: To cancel your policy, contact our customer support team via phone or email.
-  ```
-- **Output**: An answer from the knowledge base or a fallback message.
 
 #### Agent 4: ToolAgent
 - **Triggered By**: Queries classified as `tool_task`.
@@ -199,33 +167,22 @@ Based on the classification, the query is routed to the appropriate agent:
   - **AgentType.OPENAI_FUNCTIONS**: Specifies the agent type.
 - **Logic**:
   Performs a web search using DuckDuckGo to fetch external information.
-- **Example Query**: "What are the minimum car insurance requirements in Texas?"
-- **Output**: Search results from DuckDuckGo.
 
-### Step 5: Final Response
-- **Output**: The result from the appropriate agent is returned to the user as the final response.
-- **Example Output**:
-  ```plaintext
-  Using OpenAI Model: gpt-3.5-turbo
-  Starting Insurance Multi-Agent System...
-  Please describe your query or issue:
-  > What are the minimum car insurance requirements in Texas?
-  Classified Query Category: tool_task
-  Calling Agent: ToolAgent (Web Search)
-  It is using web search using DuckDuckGo...
-  Workflow Completed. Result: {
-      "query": "What are the minimum car insurance requirements in Texas?",
-      "results": [
-          {"title": "Texas Car Insurance Requirements - DMV", "href": "https://www.dmv.org/..."},
-          {"title": "Minimum Car Insurance Coverage in Texas - Nolo", "href": "https://www.nolo.com/..."},
-      ]
-  }
-  ```
-
----
+  ---
 
 ## Getting Started
 
 1. Clone the repository:
    ```bash
    git clone https://github.com/docdocode/LangGraph-Based-Multi-Agent-System-for-Insurance
+
+2. Initiate the virtual environments
+3. Put the OpenAI api key in the .env file or 
+    ```bash
+    export OPENAI_API_KEY = "your api key"
+4. Run
+    ```bash
+    pip install -r requirements.txt
+5. Run index_knowledge_base.py for once to instantiate the knowledge base
+    ```bash
+    python index_knowledge_base.py
