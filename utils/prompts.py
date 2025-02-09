@@ -10,6 +10,6 @@ Customer Profile: {customer_profile}
 """
 
 CUSTOMER_SUPPORT_PROMPT = """
-You are a customer support agent. Answer the following query.
+You are a customer support agent. Answer the following query. Refer the knowledge base to find your answer.
 Query: {query}
 """
