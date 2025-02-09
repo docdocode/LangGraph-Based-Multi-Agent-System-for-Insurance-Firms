@@ -40,7 +40,7 @@ LangGraph-Based-Multi-Agent-System-for-Insurance-Firms/
 ---
 ## Demo Video
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_NTIUDtLP5M" frameborder="0" allowfullscreen></iframe>
+[![Demo Video](https://img.youtube.com/vi/_NTIUDtLP5M/0.jpg)](https://www.youtube.com/watch?v=_NTIUDtLP5M)
 
 
 ---
