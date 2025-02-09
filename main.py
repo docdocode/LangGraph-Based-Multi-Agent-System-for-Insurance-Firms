@@ -15,8 +15,8 @@ def main():
     
     while True:
         # Take input from the user
-        print("\nPlease describe your query or issue:")
-        user_input = input("> ").strip()
+        print("\n\033[1;34mPlease describe your query or issue:\033[0m")
+        user_input = input("\033[1;33m> \033[0m").strip()
         
         # Check if the user wants to quit
         if user_input.lower() in ["quit", "exit", "clear", "done", "bye"]:
@@ -27,7 +27,7 @@ def main():
         result, logs = execute_workflow(user_input)
         
         # Print the response, calling agent, and category separately
-        print("\033[1m\033[92mWorkflow Completed. Response:\033[0m", result)  # Bold and green text
+        print("\033[1m\033[92mResponse:\033[0m", result)  # Bold and green text
         # print("\033[1m\033[94mWorkflow Logs:\033[0m", logs)  # Bold and blue text
 
 if __name__ == "__main__":
