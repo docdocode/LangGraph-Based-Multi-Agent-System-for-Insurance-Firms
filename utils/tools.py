@@ -2,7 +2,7 @@ from langchain.tools import BaseTool
 from duckduckgo_search import DDGS
 
 class WebSearchTool(BaseTool):
-    name: str = "web_search_tool"  # Add type annotation here
+    name: str = "web_search_tool"  
     description: str = "A tool for performing web searches"
 
     def _run(self, query: str):
@@ -13,7 +13,7 @@ class WebSearchTool(BaseTool):
         """
         try:
             with DDGS() as ddgs:
-                results = [result for result in ddgs.text(query, max_results=5)]  # Fetch top 5 results
+                results = [result for result in ddgs.text(query, max_results=5)] 
                 if results:
                     return {
                         "query": query,

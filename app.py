@@ -3,7 +3,6 @@ from workflows.insurance_workflow import execute_workflow
 from dotenv import load_dotenv
 import os
 
-# Load environment variables
 load_dotenv()
 
 # Streamlit App Title and Description
@@ -18,7 +17,6 @@ This application leverages multiple AI agents to assist you with:
 - **Tool Agent**: Perform web searches for external information.
 """)
 
-# Sidebar Information
 st.sidebar.header("About the Agents")
 st.sidebar.markdown("""
 - **ClaimProcessorAgent**: Processes insurance claims based on incident details.
@@ -27,7 +25,6 @@ st.sidebar.markdown("""
 - **ToolAgent**: Performs web searches using DuckDuckGo for real-time information.
 """)
 
-# User Input Section
 st.subheader("Ask Your Question")
 user_input = st.text_input("Enter your query here:", placeholder="e.g., What does my policy cover?")
 
