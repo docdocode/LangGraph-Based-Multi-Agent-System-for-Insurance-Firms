@@ -11,16 +11,14 @@ import os
 class WorkflowState:
     def __init__(self, query):
         self.query = query
-        self.result = None  # Final result of the workflow
-        self.category = None  # Classification category
+        self.result = None  #final result of the workflow
+        self.category = None  #classification category
 
-# Initialize agents
 claim_processor = ClaimProcessorAgent()
 policy_advisor = PolicyAdvisorAgent()
 customer_support = CustomerSupportAgent()
 tool_agent = ToolAgent()
 
-# Classification function
 def classify_query(state):
     prompt = ChatPromptTemplate.from_template(
         """
@@ -48,40 +46,40 @@ def classify_query(state):
     llm = ChatOpenAI(model_name=os.getenv("OPENAI_MODEL_NAME", "gpt-3.5-turbo"))
     chain = prompt | llm
     response = chain.invoke({"query": state.query})
-    state.category = response.content.strip().lower()  # Update the category field
+    state.category = response.content.strip().lower()
     
-    # Debugging output
+    #debugging
     print(f"\033[1m\033[93mClassified Query Category: {state.category}\033[0m")
     
     return state
 
-# Agent functions
+# all the Agent functions
 def process_claim(state):
-    print("\033[1m\033[93mCalling Agent: ClaimProcessorAgent\033[0m")  # Print which agent is being called
+    print("\033[1m\033[93mCalling Agent: ClaimProcessorAgent\033[0m") 
     result = claim_processor.process_claim(policy_id="POL12345", incident_details=state.query)
-    state.result = result  # Update the result field
+    state.result = result  
     return state
 
 def recommend_policy(state):
-    print("\033[1m\033[93mCalling Agent: PolicyAdvisorAgent\033[0m")  # Print which agent is being called
+    print("\033[1m\033[93mCalling Agent: PolicyAdvisorAgent\033[0m") 
     result = policy_advisor.recommend_policy(customer_profile=state.query)
-    state.result = result  # Update the result field
+    state.result = result  
     return state
 
 def handle_customer_support(state):
-    # print("\033[1m\033[93mCalling Agent: CustomerSupportAgent\033[0m")  # Print which agent is being called
+    # print("\033[1m\033[93mCalling Agent: CustomerSupportAgent\033[0m")  
     result = customer_support.handle_query(query=state.query)
-    state.result = result  # Update the result field
+    state.result = result  
     return state
 
 def perform_web_search(state):
-    print("\033[1m\033[93mCalling Agent: ToolAgent (Web Search)\033[0m")  # Print which agent is being called
+    print("\033[1m\033[93mCalling Agent: ToolAgent (Web Search)\033[0m") 
     result = tool_agent.execute_task(task_description=state.query)
     state.result = result  # Update the result field
-    state.used_web_search = True  # Mark that web search was used
+    state.used_web_search = True  
     return state
 
-# Conditional routing function
+#conditional routing function
 def route_based_on_category(state):
     category = state.category
     if category == "claim_processing":
@@ -93,30 +91,28 @@ def route_based_on_category(state):
     elif category == "tool_task":
         return "tool_task"
     else:
-        return END  # End the workflow if no category matches
+        return END  
 
-# Define the graph
+#define graph
+
 workflow = StateGraph(WorkflowState)
 
-# Add nodes
+#adding nodes
 workflow.add_node("classify_query", classify_query)
 workflow.add_node("claim_processing", process_claim)
 workflow.add_node("policy_recommendation", recommend_policy)
 workflow.add_node("customer_support", handle_customer_support)
 workflow.add_node("tool_task", perform_web_search)
 
-# Add edges
+#adding edges
 workflow.add_conditional_edges("classify_query", route_based_on_category)
 
-# Set entry point
 workflow.set_entry_point("classify_query")
 
-# Compile the graph
 app = workflow.compile()
 
 def capture_agent_calls(state):
     logs = []
-    # Only add the agent that matches the query category
     if state.category == "claim_processing":
         logs.append("Calling Agent: ClaimProcessorAgent")
     elif state.category == "policy_recommendation":
@@ -124,11 +120,9 @@ def capture_agent_calls(state):
     elif state.category == "customer_support":
         logs.append("Calling Agent: CustomerSupportAgent (with RAG)")
     
-    # Add web search if it was used
     if hasattr(state, 'used_web_search') and state.used_web_search:
         logs.append("Calling Agent: ToolAgent (Web Search)")
     
-    # Add the classified category
     logs.append(f"Classified Query Category: {state.category}")
     
     return "\n".join(logs)
@@ -141,11 +135,11 @@ def capture_agent_calls(state):
 
 # Execute the workflow through app.py
 def execute_workflow(query):
-    # Initialize the workflow state
+    #initialize the workflow state
     state = WorkflowState(query=query)
-    # Execute the workflow
+    #execute the workflow
     final_state = app.invoke(state)
-    # Capture logs
+    #capture logs
     logs = capture_agent_calls(final_state)
-    # Return the result and logs
+    #return the result and logs
     return final_state.result, logs
