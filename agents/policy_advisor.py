@@ -3,7 +3,7 @@ from utils.prompts import POLICY_ADVISOR_PROMPT
 
 class PolicyAdvisorAgent:
     def __init__(self):
-        self.llm = get_llm()  # Use the centralized model
+        self.llm = get_llm() 
     
     def recommend_policy(self, customer_profile):
         prompt = POLICY_ADVISOR_PROMPT.format(customer_profile=customer_profile)
