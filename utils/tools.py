@@ -7,9 +7,9 @@ class WebSearchTool(BaseTool):
 
     def _run(self, query: str):
         """
-        Perform a DuckDuckGo search and return the top results.
+        Perform a DuckDuckGo search and return the summary of the top results. And add all the reference link at the end of the summary.
         :param query: The search query.
-        :return: A list of search results.
+        :return: The summary, and the reference links.
         """
         try:
             with DDGS() as ddgs:
