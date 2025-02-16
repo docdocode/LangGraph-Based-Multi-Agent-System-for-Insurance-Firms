@@ -35,7 +35,7 @@ LangGraph-Based-Multi-Agent-System-for-Insurance-Firms/
 ---
 ## Architecture
 
-![Architecture](images/architecture-flow.png)
+![Architecture](images/flow.png)
 
 ---
 ## Demo Video
