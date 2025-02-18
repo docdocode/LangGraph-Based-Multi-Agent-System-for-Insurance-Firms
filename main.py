@@ -6,8 +6,12 @@ from langsmith import trace
 # Load environment variables
 load_dotenv()
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_API_KEY"] = "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"
-os.environ["LANGCHAIN_PROJECT"] = "Insurance-Multi-Agent-System"  # Organize logs under this project
+os.environ["LANGCHAIN_API_KEY"] = "lsv2_"
+
+
+
+
+os.environ["LANGCHAIN_PROJECT"] = "manulife-now"  # Organize logs under this project
 os.environ["LANGCHAIN_VERBOSE"] = "true"  # Enable verbose logging
 
 def main():
